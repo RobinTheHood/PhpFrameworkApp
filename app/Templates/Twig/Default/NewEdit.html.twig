@@ -1,0 +1,93 @@
+{% extends "Default/Standard.html.twig" %}
+
+{% block content %}
+
+    {% if form.isEdit() %}
+        <h2>{{ controller['options']['editName'] }}</h2>
+
+        <p>
+            <div class="btn-group">
+                {% if controller['options']['indexVisible'] == true %}
+                    <a class="btn btn-xs btn-default" href="{{ controller['buttons']['modelIndex'] }}">
+                        <i class="fa fa-caret-left"></i>
+                        <span class="visible-lg-inline">
+                            {{ controller['options']['indexName'] }}
+                        </span>
+                    </a>
+                {% endif %}
+
+                {% if controller['options']['showVisible'] == true %}
+                    <a class="btn btn-xs btn-default" href="{{ controller['buttons']['modelShow'] }}">
+                        <i class="fa fa-search"></i>
+                        <span class="visible-lg-inline">
+                            {{ controller['options']['showName'] }}
+                        </span>
+                    </a>
+                {% endif %}
+
+                {% if controller['options']['deleteVisible'] == true %}
+                    <a class="btn btn-xs btn-default" href="{{ controller['buttons']['modelDelete'] }}" data-confirm="Are you sure?" data-method="delete">
+                        <i class="fa fa-trash-o"></i>
+                        <span class="visible-lg-inline">
+                            {{ controller['options']['deleteName'] }}
+                        </span>
+                    </a>
+                {% endif %}
+            </div>
+        </p>
+    {% else %}
+        <div class="btn-group">
+            {% if controller['options']['indexVisible'] == true %}
+                <a class="btn btn-xs btn-default" href="{{ controller['buttons']['modelIndex'] }}">
+                    <i class="fa fa-caret-left"></i>
+                    <span class="visible-lg-inline">
+                        {{ controller['options']['indexName'] }}
+                    </span>
+                </a>
+            {% endif %}
+        </div>
+
+        <h2>{{ controller['options']['newName'] }}</h2>
+    {% endif %}
+
+    <form role="form" method="post" action="{{ form.getAction() }}">
+        {% for columnName in controller['structure']|keys %}
+            <div class="form-group">
+                {{ form.getLabel(columnName)|raw }}
+                {{ form.get(columnName, {'class': 'form-control'})|raw }}
+            </div>
+        {% endfor %}
+
+        <div class="form-group pull-right">
+            <button class="btn btn-primary" type="submit">
+                {% if form.isEdit() %}
+                    {{ controller['options']['editName'] }}
+                {% else %}
+                    {{ controller['options']['newName'] }}
+                {% endif %}
+            </button>
+        </div>
+    </form>
+
+    <script>
+        $(function () {
+            $('.datetimepicker').datetimepicker({
+                locale: 'de'
+            });
+        });
+
+        // Auto-Grow-TextArea script.
+        // Script copyright (C) 2011 www.cryer.co.uk.
+        // Script is free to use provided this copyright header is included.
+        function AutoGrowTextArea(textField)
+        {
+            if (textField.clientHeight < textField.scrollHeight) {
+                textField.style.height = textField.scrollHeight + "px";
+                if (textField.clientHeight < textField.scrollHeight) {
+                  textField.style.height =
+                    (textField.scrollHeight * 2 - textField.clientHeight) + "px";
+                }
+            }
+        }
+    </script>
+{% endblock %}

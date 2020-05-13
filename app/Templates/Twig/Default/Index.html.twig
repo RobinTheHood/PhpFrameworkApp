@@ -1,0 +1,75 @@
+{% extends "Default/Standard.html.twig" %}
+
+{% block content %}
+
+    {% if controller['options']['newVisible'] %}
+        <a class="btn btn-primary btn-s" href="{{ controller['buttons']['modelNew'] }}">
+            <i class="fa fa-plus"></i>
+            <span class="visible-lg-inline">
+                {{ controller['options']['newName'] }}
+            </span>
+        </a>
+    {% endif %}
+
+    {% if controller['options']['multiEditVisible'] %}
+        <a class="btn btn-primary btn-s" href="{{ controller['buttons']['modelMultiEdit'] }}">
+            <i class="fa fa-pencil"></i>
+            <span class="visible-lg-inline">
+                {{ controller['options']['multiEditName'] }}
+            </span>
+        </a>
+    {% endif %}
+
+    <p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    {% for columnName in controller['structure']|keys %}
+                        {% if controller['options']['fieldNames'][columnName] %}
+                            <th>{{ controller['options']['fieldNames'][columnName] }}</th>
+                        {% else %}
+                            <th>{{ columnName }}</th>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for row in rows %}
+                    <tr>
+                        {% for columnName in row['values']|keys %}
+                            <td>
+                                {{ row['valueFormater'].get(columnName) }}
+                            </td>
+                        {% endfor %}
+                        <td class="text-right">
+                            <div class="btn-group">
+                                <a class="btn btn-default btn-xs" href="{{ row['model'].getButton('modelShow') }}">
+                                    <i class="fa fa-search"></i>
+                                    <span class="visible-lg-inline">
+                                        {{ controller['options']['showName'] }}
+                                    </span>
+                                </a>
+
+                                <a class="btn btn-default btn-xs" href="{{ row['model'].getButton('modelEdit') }}">
+                                    <i class="fa fa-pencil"></i>
+                                    <span class="visible-lg-inline">
+                                        {{ controller['options']['editName'] }}
+                                    </span>
+                                </a>
+
+                                <a class="btn btn-default btn-xs" href="{{ row['model'].getButton('modelDelete') }}" data-confirm="Are you sure?" data-method="delete">
+                                    <i class="fa fa-trash-o"></i>
+                                    <span class="visible-lg-inline">
+                                        {{ controller['options']['deleteName'] }}
+                                    </span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </p>
+{% endblock %}

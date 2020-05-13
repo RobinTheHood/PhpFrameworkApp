@@ -1,0 +1,24 @@
+{% extends "Public/Standard.html.twig" %}
+
+{% block content %}
+    <style>
+        .starter-template {
+            padding: 40px 15px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+
+    <div class="start-tempate">
+        <div class="text-center">
+            <h1>PhpFrameworkApp</h1>
+
+            <p class="lead">
+                <a href="{{ buttonUser }}" style="font-size: 14px;">user</a> |
+                <a href="?action=imprint" style="font-size: 14px;">imprint</a> |
+                <a href="?action=privacy" style="font-size: 14px;">privacy</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}

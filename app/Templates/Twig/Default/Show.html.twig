@@ -1,0 +1,47 @@
+{% extends "Default/Standard.html.twig" %}
+
+{% block content %}
+    <p>
+        <div class="btn-group">
+            {% if controller['options']['indexVisible'] == true %}
+                <a class="btn btn-xs btn-default" href="{{ controller['buttons']['modelIndex'] }}">
+                    <i class="fa fa-caret-left"></i>
+                    <span class="visible-lg-inline">
+                        {{ controller['options']['indexName'] }}
+                    </span>
+                </a>
+            {% endif %}
+
+            {% if controller['options']['editVisible'] == true %}
+                <a class="btn btn-xs btn-default" href="{{ controller['buttons']['modelEdit'] }}">
+                    <i class="fa fa-search"></i>
+                    <span class="visible-lg-inline">
+                        {{ controller['options']['editName'] }}
+                    </span>
+                </a>
+            {% endif %}
+
+            {% if controller['options']['deleteVisible'] == true %}
+                <a class="btn btn-xs btn-default" href="{{ controller['buttons']['modelDelete'] }}" data-confirm="Are you sure?" data-method="delete">
+                    <i class="fa fa-trash-o"></i>
+                    <span class="visible-lg-inline">
+                        {{ controller['options']['deleteName'] }}
+                    </span>
+                </a>
+            {% endif %}
+        </div>
+    </p>
+
+    <h3>{{ controller['modelName'] }}</h3>
+    <dl class="dl-horizontal panel-body">
+        {% for columnName, value in values %}
+            <dt>
+                {{ columnName }}
+            </dt>
+
+            <dd>
+                {{ valueFormater.get(columnName) }}
+            </dd>
+        {% endfor %}
+    </dl>
+{% endblock %}

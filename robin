@@ -1,0 +1,58 @@
+#!/usr/bin/env php
+<?php
+//  Set the current directory for require autoload
+chdir(__DIR__);
+
+// Errorhandling
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL ^E_NOTICE);
+
+// Composer autoload
+require_once 'vendor/autoload.php';
+
+use RobinTheHood\Debug\Debug;
+use RobinTheHood\PhpFramework\App;
+use RobinTheHood\PhpFramework\Scripts\CreateModelScript;
+use RobinTheHood\PhpFramework\Scripts\MigrationScript;
+
+// Init App and set root-paths
+App::init([
+    'rootPath' => __DIR__,
+    'configPath' => __DIR__ . '/config/config.php'
+]);
+
+// Load Configuration
+$appConfig = App::loadConfig();
+
+
+switch ($argv[1])
+{
+    case 'model':
+        $createModelScript = new CreateModelScript([
+            'repositoriesPath' => $appConfig['app']['repositoriesPath'],
+            'modelsPath' => $appConfig['app']['modelsPath'],
+            'migrationsPath' => $appConfig['migration']['migrationsPath']
+        ]);
+        $createModelScript->action($argv);
+        break;
+
+    case 'migration':
+        $migrationScript = new MigrationScript([
+            'host' => $appConfig['database']['host'],
+            'user' => $appConfig['database']['user'],
+            'password' => $appConfig['database']['password'],
+            'database' => $appConfig['database']['database'],
+
+            'migrationPath' => $appConfig['migration']['migrationsPath']
+        ]);
+        $migrationScript->action($argv);
+        break;
+
+    case 'help':
+        Debug::out('Type ./robin model help or ./robin migration help');
+        die();
+
+    default:
+        Debug::out('Unkown command. Type help for help.');
+}

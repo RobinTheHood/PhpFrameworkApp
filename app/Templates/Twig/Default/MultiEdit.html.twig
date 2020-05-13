@@ -1,0 +1,62 @@
+{% extends "Default/Standard.html.twig" %}
+
+{% block content %}
+    <script>
+        var registerMultiEditDelete = function() {
+            var objs = $('.{{ controller['modelName'] }}');
+            objs.each(function(index, obj) {
+                var obj2 = $('.delete{{ controller['modelName'] }}', obj);
+                obj2.click(function(event) {
+                    $('.{{ controller['modelName'] }}_multiEditAction', obj).val('delete');
+                    $(obj).hide();
+                });
+            });
+        }
+    </script>
+
+    <div class="btn-group">
+        {% if controller['options']['indexVisible'] == true %}
+            <a class="btn btn-xs btn-default" href="{{ controller['buttons']['modelIndex'] }}">
+                <i class="fa fa-caret-left"></i>
+                <span class="visible-lg-inline">
+                    {{ controller['options']['indexName'] }}
+                </span>
+            </a>
+        {% endif %}
+    </div>
+
+    <form role="form" method="post" action="{{ controller['buttons']['modelMultiEdit'] }}">
+        <table class="table">
+            <thead>
+                <tr>
+                    {% for columnName in controller['structure']|keys %}
+                        {% if controller['options']['fieldNames'][columnName] %}
+                            <th>{{ controller['options']['fieldNames'][columnName] }}</th>
+                        {% else %}
+                            <th>{{ columnName }}</th>
+                        {% endif %}
+                    {% endfor %}
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody id="multiEditForms">
+                {% for form in forms %}
+                    {% include 'Default/MultiEditForm.html.twig' with {'form': form} %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ controller['buttons']['modelMultiEditAdd'] }}" data-method= "ajax-action" data-target="multiEditForms" data-target-mode="append">
+            + {{ controller['options']['newName'] }}
+        </a>
+
+        <hr>
+
+        <div class="form-group pull-right">
+            <button class="btn btn-primary" type="submit">
+                {{ controller['options']['multiEditSaveName'] }}
+            </button>
+        </div>
+    </form>
+{% endblock %}

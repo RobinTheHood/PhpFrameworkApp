@@ -1,0 +1,63 @@
+<style>
+    .alert-wrapper {
+        position: fixed;
+        z-index: 2000;
+        top: 25px;
+        left: 0px;
+        padding-left: 200px;
+        padding-right: 200px;
+        width: 100%;
+    }
+</style>
+
+<div class="alert-wrapper">
+    {% if _this.hasFlashMassage('success') %}
+        <div class="flash-auto-hide">
+            <div class="alert alert-success" role="alert" style="margin-bottom: 25px">
+                <button class="close" aria-label="Close" data-dismiss="alert" type="button">
+                    <span aria-hidden="true">×</span>
+                </button>
+                {{ _this.getFlashMassage('success') }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if _this.hasFlashMassage('info') %}
+        <div class="">
+            <div class="alert alert-info" role="alert" style="margin-bottom: 25px">
+                <button class="close" aria-label="Close" data-dismiss="alert" type="button">
+                    <span aria-hidden="true">×</span>
+                </button>
+                {{ _this.getFlashMassage('info') }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if _this.hasFlashMassage('warning') %}
+        <div class="">
+            <div class="alert alert-warning" role="alert" style="margin-bottom: 25px">
+                <button class="close" aria-label="Close" data-dismiss="alert" type="button">
+                    <span aria-hidden="true">×</span>
+                </button>
+                {{ _this.getFlashMassage('warning') }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if _this.hasFlashMassage('danger') %}
+        <div class="">
+            <div class="alert alert-danger" role="alert" style="margin-bottom: 25px">
+                <button class="close" aria-label="Close" data-dismiss="alert" type="button">
+                    <span aria-hidden="true">×</span>
+                </button>
+                {{ _this.getFlashMassage('danger') }}
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+    $(".flash-auto-hide").fadeTo(2000, 500).slideUp(500, function(){
+        $(".flash-auto-hide").slideUp(500);
+    });
+</script>
