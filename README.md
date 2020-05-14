@@ -15,3 +15,4 @@ This repository is a skeleton app for the PhpFramework.
 - $ npm install --global gulp-cli
 - $ npm install
 - $ gulp
+- $ ./robin migration -m
